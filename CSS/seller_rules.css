@@ -1,0 +1,24 @@
+.head
+{
+    color:#660033;
+}
+.pan
+{
+    margin:30px;
+}
+input[type=submit]
+{
+  
+    width:355px;
+    height:35px;
+    border-radius:5px;   
+    background-color:#660033;
+    border:none;
+    color:#FFFFFF;
+    margin:20px;
+    margin-left:700px;
+}
+input[type=submit]:hover 
+{
+    background-color:	#CC0099;
+}

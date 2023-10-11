@@ -1,0 +1,23 @@
+input[type=submit]
+{
+    width:355px;
+    height:35px;
+    border-radius:5px;
+    background-color:#660033;
+    border:none;
+    color:#FFFFFF;
+}
+input[type=submit]:hover
+{
+    background-color:	#CC0099;
+}
+div.card
+{
+    margin-left:550px;
+    padding:20px;
+    width:400px;
+}
+div.card:hover
+{
+    box-shadow: 5px 5px 5px #CCCCCC , 5px 5px 5px #CCCCCC;
+}

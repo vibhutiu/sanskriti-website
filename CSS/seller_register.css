@@ -1,0 +1,29 @@
+input[type=submit]
+{
+    width:355px;
+    height:35px;
+    border-radius:5px;
+    background-color:#660033;
+    border:none;
+    color:#FFFFFF;
+    margin-left:3px;
+}
+input[type=submit]:hover 
+{
+    background-color:#CC0099;
+}
+div.card
+{
+    margin-left:380px;
+    padding:30px;
+    height:auto;
+    width:450px;
+    margin-top:5px;
+    position:relative;
+    top:90px;
+    box-shadow: 5px 5px 5px #CCCCCC, 5px 5px 5px #CCCCCC;
+}
+.form-control:focus
+{
+    border-color:#660033;
+}
