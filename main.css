@@ -1,0 +1,46 @@
+
+.r1
+{
+    height: 250px;
+    width: 20%;
+    float: left;
+}
+.r2
+{
+    height: 250px;
+    width: 20%;
+    float: left;
+}
+.r3
+{
+    height: 250px;
+    width: 20%;
+    float: left;
+}
+#signup
+{
+    position: absolute;
+    z-index: 1;
+    bottom: 25px;
+    left: 600px;
+}
+#home
+{
+    position: absolute;
+    z-index: 1;
+    bottom: 25px;
+    left: 800px;
+}
+#login
+{
+    position: absolute;
+    z-index: 1;
+    bottom: 25px;
+    left: 1000px;
+}
+.foot
+{
+    height: 60px;
+    width: 60px;
+    border-radius: 60px;
+}

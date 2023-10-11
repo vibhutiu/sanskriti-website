@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Previous Orders</title>
+<style>
+    .image
+    {
+        width: 100%;
+        height: auto;
+        position:relative;
+        left:7px;
+        width:100px;
+        height:150px;
+        padding:0px;
+        float:left;
+    }
+    .card
+    {
+        position:relative;
+        top:00px;
+        box-shadow: 5px 5px 5px #CCCCCC, 5px 5px 5px #CCCCCC;
+        float:left;
+        margin:10px;
+        padding:10px;
+        width:300px;
+        height:400px;
+    }
+</style>
+    <script type="text/javascript">
+        function getLost()
+        {
+            document.location('seller_item_packed.php');
+        }
+    </script>
+</head>
+
+<body>
+<?php 
+    include 'home_header.php';
+?>
+
+<h2 align="center" style="color:#660033">MY PREVIOUS ORDERS</h2>
+
+    
+<!--<div class="panel panel-info">
+<div class="panel-heading" >-->
+<hr />	
+<h2 align="center"> YET TO BE DELIVERED</h2>
+<hr />
+
+    
+<div class="row">
+
+
+<div  class="col-lg-9" style="float:left; top:20px; margin-top:10px;">
+<div class="container-fluid" style=" margin-top:30px; margin-left:20px">
+<div class="panel panel-default" style="background-color:#666666; width:1000px; margin-left:20px">
+
+  <div class="panel-body">
+  <div class="row">
+  <div class="col-lg-3" align="right" style="color:#FFFFFF">Product</div>
+  <div class="col-lg-2" align="right" style="margin-right:5px; color:#FFFFFF">Total</div>
+  <div class="col-lg-1" align="center" style="position:relative; left:45px;color:#FFFFFF">Quantity</div>
+  <div class="col-lg-2" align="right" style="color:#FFFFFF;position:relative; left:50px;">Shipping Details</div>
+      <div class="col-lg-2" align="right" style="color:#FFFFFF;position:relative; left:120px;">Order Status</div>
+  
+  </div>
+  
+
+  </div>
+</div>
+
+
+<?php
+    
+    
+    include 'connection.php';
+    
+    $sql1="SELECT * FROM sells WHERE cid='".$_SESSION['c_id']."' AND delivered='0'";
+    
+    $res1=mysqli_query($con,$sql1);
+    $row1=mysqli_fetch_all($res1,MYSQLI_BOTH);
+    $size1=sizeof($row1);
+    //print_r($row1);
+    //echo $size1;
+    if($size1==0)
+    {
+        echo "<h1 align='center'>No Items</h1>";
+    }
+    
+    $i=0;
+    
+    while($i<$size1)
+    {
+        $pid=$row1[$i]["pid"];
+        $cat=$row1[$i]["ptable"];
+        $s=$row1[$i]["size"];
+        $quantity=$row1[$i]["quantity"];
+        $status='<div class="col-lg-2" style="position:relative; top:50px; left:20px;color:red;font-size:20px"><b>Unknown</b>
+        </div>';
+        
+        $sql2="SELECT * FROM ".$cat." WHERE id=".$pid;
+        
+        $res2=mysqli_query($con,$sql2);
+        $row2=mysqli_fetch_array($res2);
+        
+        //for displaying proper size
+        
+        if($s=="S")
+        {
+            $size="Small";
+        }
+        else if($s=="M")
+        {
+            $size="Medium";
+        }
+        else if($s=="L")
+        {
+            $size="Large";
+        }
+        else if($s=="XL")
+        {
+            $size="X-Large";
+        }
+        else
+        {
+            $size=" ";
+        }
+        
+        //order status
+        
+        if($row1[$i]["packed"]=="1")
+        {
+            $status='<div class="col-lg-2" style="position:relative; top:50px; left:20px;color:green;font-size:20px"><b>Packed</b>
+        </div>';
+        }
+        
+        if($row1[$i]["shipped"]=="1")
+        {
+            $status='<div class="col-lg-2" style="position:relative; top:50px; left:20px;color:green;font-size:20px"><b>Shipped</b>
+        </div>';
+        }
+        
+        if($row1[$i]["delivered"]=="1")
+        {
+            $status='<div class="col-lg-2" style="position:relative; top:50px; left:20px;color:green;font-size:20px"><b>Delivered</b>
+        </div>';
+        }
+        
+        
+        //displaying card
+        
+        
+        $m0='<div class="card" style="width:1000px;height:170px; position:relative; top:15px; margin-left:23px; margin-right:23px;"><div class="row">';
+        
+        $m1='<div class="col-lg-2"><img src="data:image/jpeg;base64,'.base64_encode($row2['image']). ' " class="image" /></div>';
+        
+        $m2='<div class="col-lg-3" style="position:relative; top:60px"><b>'.$row2['name'].'</b><br />'.$size.'</div><div class="col-lg-1"><div class="form-group">
+        
+        <input class="price" class="form-control" type="number" style="float:left;width:50px; border:none; background-color:#FFFFFF; position:relative; top:60px; right:40px"value="'.$row2['price']*$row1[$i]['quantity'].'" onchange="sum1()" disabled="disabled"></div></div>';
+        
+        $m3='<div class="col-lg-1"><div class="form-group">
+        
+        <input class="qnt form-control" class="form-control" type="number" style="float:left;  width:60px; position:relative; top:55px; right:15px;" value="'.$row1[$i]['quantity'].'" onchange="sum1()" name="q[]" disabled></div></div>';
+        
+        $m4='<div class="col-lg-3 tot2" style="position:relative; top:10px" class=""><b>Name:</b>'.$row1[$i]["name"].'<br><b>Phone:</b>'.$row1[$i]["phone"].'<br><b>Email:</b>'.$row1[$i]["email"].'<br><b>Address:</b>'.$row1[$i]["address"].','.$row1[$i]["city"].'-'.$row1[$i]["pincode"].'<br>'.$row1[$i]["state"].'</div>';
+        
+        $m5='<form action="#" method="post"><input type="hidden" name="id" value="'.$row1[$i]["id"].'" />'.$status.'</form></div></div>';
+        
+        
+        echo $m0;
+        echo $m1;
+        echo $m2;
+        echo $m3;
+        echo $m4;
+        echo $m5;
+        
+        $i++;
+        
+    }
+?>
+    </div>
+    </div>
+    </div>
+    <br>
+    <br>
+    
+   <hr />
+   
+<h2 align="center">DELIVERED</h2>
+<hr/>
+        </div>
+    </div>
+    
+    
+<div class="row">
+
+
+<div  class="col-lg-9" style="float:left; top:20px; margin-top:10px;">
+<div class="container-fluid" style=" margin-top:30px; margin-left:20px">
+<div class="panel panel-default" style="background-color:#666666; width:1000px; margin-left:20px">
+
+  <div class="panel-body">
+  <div class="row">
+  <div class="col-lg-3" align="right" style="color:#FFFFFF">Product</div>
+  <div class="col-lg-2" align="right" style="margin-right:5px; color:#FFFFFF">Total</div>
+  <div class="col-lg-1" align="center" style="position:relative; left:45px;color:#FFFFFF">Quantity</div>
+  <div class="col-lg-2" align="right" style="color:#FFFFFF;position:relative; left:50px;">Shipping Details</div>
+      <div class="col-lg-2" align="right" style="color:#FFFFFF;position:relative; left:120px;">Order Status</div>
+  
+  </div>
+  
+
+  </div>
+</div>
+
+<?php
+    
+    $sql1="SELECT * FROM sells WHERE cid='".$_SESSION['c_id']."' AND delivered='1'";
+    
+    $res1=mysqli_query($con,$sql1);
+    $row1=mysqli_fetch_all($res1,MYSQLI_BOTH);
+    $size1=sizeof($row1);
+    //print_r($row1);
+    //echo $size1;
+    
+    if($size1==0)
+    {
+        echo "<h1 align='center'>No Items</h1>";
+    }
+    
+    $i=0;
+    
+    while($i<$size1)
+    {
+        $pid=$row1[$i]["pid"];
+        $cat=$row1[$i]["ptable"];
+        $s=$row1[$i]["size"];
+        $quantity=$row1[$i]["quantity"];
+        $status='<div class="col-lg-2" style="position:relative; top:50px; left:20px;color:red;font-size:20px"><b>Unknown</b>
+        </div>';
+        
+        $sql2="SELECT * FROM ".$cat." WHERE id=".$pid;
+        
+        $res2=mysqli_query($con,$sql2);
+        $row2=mysqli_fetch_array($res2);
+        
+        //for displaying proper size
+        
+        if($s=="S")
+        {
+            $size="Small";
+        }
+        else if($s=="M")
+        {
+            $size="Medium";
+        }
+        else if($s=="L")
+        {
+            $size="Large";
+        }
+        else if($s=="XL")
+        {
+            $size="X-Large";
+        }
+        else
+        {
+            $size=" ";
+        }
+        
+        //order status
+        
+        if($row1[$i]["delivered"]=="1")
+        {
+            $status='<div class="col-lg-2" style="position:relative; top:50px; left:20px;color:green;font-size:20px"><b>Delivered</b>
+        </div>';
+        }
+        
+        
+        //displaying card
+        
+        
+        $m0='<div class="card" style="width:1000px;height:170px; position:relative; top:15px; margin-left:23px; margin-right:23px;"><div class="row">';
+        
+        $m1='<div class="col-lg-2"><img src="data:image/jpeg;base64,'.base64_encode($row2['image']). ' " class="image" /></div>';
+        
+        $m2='<div class="col-lg-3" style="position:relative; top:60px"><b>'.$row2['name'].'</b><br />'.$size.'</div><div class="col-lg-1"><div class="form-group">
+        
+        <input class="price" class="form-control" type="number" style="float:left;width:50px; border:none; background-color:#FFFFFF; position:relative; top:60px; right:40px"value="'.$row2['price']*$row1[$i]['quantity'].'" onchange="sum1()" disabled="disabled"></div></div>';
+        
+        $m3='<div class="col-lg-1"><div class="form-group">
+        
+        <input class="qnt form-control" class="form-control" type="number" style="float:left;  width:60px; position:relative; top:55px; right:15px;" value="'.$row1[$i]['quantity'].'" onchange="sum1()" name="q[]" disabled></div></div>';
+        
+        $m4='<div class="col-lg-3 tot2" style="position:relative; top:10px" class=""><b>Name:</b>'.$row1[$i]["name"].'<br><b>Phone:</b>'.$row1[$i]["phone"].'<br><b>Email:</b>'.$row1[$i]["email"].'<br><b>Address:</b>'.$row1[$i]["address"].','.$row1[$i]["city"].'-'.$row1[$i]["pincode"].'<br>'.$row1[$i]["state"].'</div>';
+        
+        $m5='<form action="#" method="post"><input type="hidden" name="id" value="'.$row1[$i]["id"].'" />'.$status.'</form></div></div>';
+        
+        
+        echo $m0;
+        echo $m1;
+        echo $m2;
+        echo $m3;
+        echo $m4;
+        echo $m5;
+        
+        $i++;
+        
+    }
+?>
+    </div>
+    </div>
+    </div>
+</body>
+</html>

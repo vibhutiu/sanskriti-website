@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Register</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="JS/register_validate.js"></script>
+  <style>
+   input[type=submit]{
+  width:355px;
+   height:35px; 
+  border-radius:5px;
+   background-color:#660033;
+   border:none; 
+  color:#FFFFFF;
+  margin-left:3px;
+  }
+  input[type=submit]:hover 
+		{
+		background-color:#CC0099;
+		}
+  div.card:hover{
+box-shadow: 5px 5px 5px #CCCCCC, 5px 5px 5px #CCCCCC;
+
+
+}
+  </style>
+</head>
+
+<body>
+<div class="card" style="margin-left:550px; padding:20px; height:525px; width:400px">
+<h2 align="center">Create User Account</h2>
+<br />
+<br />
+<form action="storeprofile.php" method="post" name="register_form" onsubmit="return register_validate()">
+<div class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+<input type="text" class="form-control" placeholder="Enter Your Name" required="" name="fullname" />
+</div>
+<br />
+<div class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+<input type="text" class="form-control" placeholder="Enter Your Email" required="" name="email"/>
+</div>
+<br />
+<div class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+<input type="text" class="form-control" placeholder="Enter Your Phone No." required="" name="phone_number"/>
+</div>
+<br />
+<div class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+<input type="password" class="form-control" placeholder="Password" required="" name="password"/>
+</div>
+<br />
+<div class="input-group">
+<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+<input type="password" class="form-control" placeholder="Re-enter Password" required="" name="confirm_password"/>
+</div>
+<br />
+<input type="submit" value="Create Account" />
+</form>	
+<br />
+<p align="center"><i>Already a member? </i><a href="signin2.php">Signin</a></p>
+
+</div>
+
+</body>
+</html>
